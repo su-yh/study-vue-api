@@ -28,3 +28,5 @@ ALTER TABLE sys_menu
     ADD COLUMN menu_key varchar(64) NOT NULL COMMENT '每个菜单的唯一主键';
 
 ALTER TABLE sys_menu ADD UNIQUE INDEX uni_key(menu_key) USING BTREE, ALGORITHM=INPLACE, LOCK=NONE;
+
+
