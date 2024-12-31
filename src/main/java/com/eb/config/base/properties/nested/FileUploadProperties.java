@@ -1,6 +1,5 @@
 package com.eb.config.base.properties.nested;
 
-import com.eb.rouyi.file.RuoyiFileUtils;
 import lombok.Data;
 import org.springframework.util.StringUtils;
 
@@ -34,8 +33,6 @@ public class FileUploadProperties {
         } else {
             this.dir = dir + separatorStr;
         }
-
-        RuoyiFileUtils.UPLOAD_DIR = this.dir;
 
         return this;
     }

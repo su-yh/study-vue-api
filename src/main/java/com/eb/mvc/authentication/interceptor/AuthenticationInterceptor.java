@@ -4,7 +4,6 @@ import com.eb.constant.ErrorCodeConstants;
 import com.eb.mvc.authentication.LoginUser;
 import com.eb.mvc.authentication.annotation.Permit;
 import com.eb.mvc.exception.ExceptionUtil;
-import com.eb.rouyi.service.SysPermissionService;
 import com.eb.system.service.UserService;
 import com.eb.util.TokenUtils;
 import io.jsonwebtoken.Claims;
@@ -29,7 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthenticationInterceptor implements HandlerInterceptor {
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
     private final UserService userService;
-    private final SysPermissionService permissionService;
 
     /**
      * 对于非业务API 接口忽略认证的API 配置
@@ -127,6 +125,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         }
 
         long id = Long.parseLong(strId);
-        return new LoginUser(userService, permissionService, id, username, nickname);
+        return new LoginUser(userService, id, username, nickname);
     }
 }

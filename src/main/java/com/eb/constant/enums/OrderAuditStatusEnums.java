@@ -1,9 +1,6 @@
 package com.eb.constant.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
-import com.eb.constant.CommunityConstants;
-import com.eb.rouyi.excel.annotation.ExcelEnumMessageCategory;
-import com.eb.rouyi.excel.annotation.ExcelEnumMessageCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
@@ -12,7 +9,6 @@ import lombok.Getter;
  * @since 2024-09-06
  */
 @Getter
-@ExcelEnumMessageCategory(CommunityConstants.ENUM_EXCEL_FIELD_PREFIX_ORDER_AUDIT_STATUS)
 public enum OrderAuditStatusEnums {
     @Schema(description = "0-正常")
     NORMAL(0),
@@ -27,7 +23,6 @@ public enum OrderAuditStatusEnums {
     ;
 
     @EnumValue
-    @ExcelEnumMessageCode
     private final int code;
 
     OrderAuditStatusEnums(int code) {

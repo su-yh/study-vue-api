@@ -3,7 +3,6 @@ package com.eb.mvc.configurer;
 import com.eb.mvc.authentication.CurrUserArgumentResolver;
 import com.eb.mvc.authentication.interceptor.AuthenticationInterceptor;
 import com.eb.mvc.error.BaseHandlerExceptionResolver;
-import com.eb.rouyi.service.SysPermissionService;
 import com.eb.system.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
@@ -20,7 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BaseWebMvcConfigurer implements WebMvcConfigurer {
     private final UserService userService;
-    private final SysPermissionService permissionService;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
@@ -46,7 +44,7 @@ public class BaseWebMvcConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(@NonNull InterceptorRegistry registry) {
-        AuthenticationInterceptor loginInterceptor = new AuthenticationInterceptor(userService, permissionService);
+        AuthenticationInterceptor loginInterceptor = new AuthenticationInterceptor(userService);
         registry.addInterceptor(loginInterceptor).addPathPatterns("/**");
     }
 }

@@ -3,7 +3,7 @@ package com.eb.system.service;
 import com.eb.config.base.properties.BaseProperties;
 import com.eb.constant.ErrorCodeConstants;
 import com.eb.mvc.exception.ExceptionUtil;
-import com.eb.rouyi.entity.SysUser;
+import com.eb.rouyi.entity.SysUserEntity;
 import com.eb.rouyi.mapper.SysUserMapper;
 import com.eb.util.TokenUtils;
 import com.warrenstrange.googleauth.GoogleAuthenticator;
@@ -34,7 +34,7 @@ public class UserService {
     private final SysUserMapper userMapper;
 
     public String login(@NonNull String username, @NonNull String password, @NonNull Integer code) {
-        SysUser historyEntity = userMapper.selectByUni(username);
+        SysUserEntity historyEntity = userMapper.selectByUni(username);
         if (historyEntity == null) {
             throw ExceptionUtil.business(ErrorCodeConstants.USER_BAD_CREDENTIALS);
         }
@@ -53,13 +53,13 @@ public class UserService {
     }
 
     @Transactional
-    public int createUser(SysUser sysUser) {
-        SysUser historyEntity = userMapper.selectByUni(sysUser.getUsername());
+    public int createUser(SysUserEntity sysUserEntity) {
+        SysUserEntity historyEntity = userMapper.selectByUni(sysUserEntity.getUsername());
         if (historyEntity != null) {
-            throw ExceptionUtil.business(ErrorCodeConstants.USER_EXISTS, sysUser.getUsername());
+            throw ExceptionUtil.business(ErrorCodeConstants.USER_EXISTS, sysUserEntity.getUsername());
         }
 
-        String password = sysUser.getPassword();
+        String password = sysUserEntity.getPassword();
         String salt = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 32);
 
         String sourcePassword = password + salt;
@@ -67,11 +67,11 @@ public class UserService {
 
         String twoFactorAuthkey = googleAuth.createCredentials().getKey();
 
-        sysUser.setPassword(ciphertextPwd);
-        sysUser.setSalt(salt);
-        sysUser.setTwoFactorAuthKey(twoFactorAuthkey);
+        sysUserEntity.setPassword(ciphertextPwd);
+        sysUserEntity.setSalt(salt);
+        sysUserEntity.setTwoFactorAuthKey(twoFactorAuthkey);
 
-        return userMapper.insertUser(sysUser);
+        return userMapper.insert(sysUserEntity);
     }
 
     private void validUser2Fa(String twoFactorAuthKey, Integer codeFa) {
@@ -85,7 +85,7 @@ public class UserService {
         }
     }
 
-    public SysUser obtainUserById(Long userId) {
+    public SysUserEntity obtainUserById(Long userId) {
         if (userId == null) {
             return null;
         }
@@ -95,7 +95,7 @@ public class UserService {
 
     @Transactional
     public void updateUserPwd(@NonNull Long userId, @NonNull String password) {
-        SysUser historyEntity = obtainUserById(userId);
+        SysUserEntity historyEntity = obtainUserById(userId);
         if (historyEntity == null) {
             throw ExceptionUtil.business(ErrorCodeConstants.USER_NOT_EXISTS);
         }
@@ -103,33 +103,33 @@ public class UserService {
         String salt = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 32);
         String ciphertextPwd = passwordEncoder.encode(password + salt);
 
-        SysUser user = new SysUser();
-        user.setUserId(userId);
+        SysUserEntity user = new SysUserEntity();
+        user.setId(userId);
         user.setPassword(ciphertextPwd);
         user.setSalt(salt);
 
-        userMapper.updateUser(user);
+        userMapper.updateById(user);
     }
 
     @Transactional
     public String resetTwoFactorAuthKey(@NonNull Long id) {
-        SysUser historyEntity = obtainUserById(id);
+        SysUserEntity historyEntity = obtainUserById(id);
         if (historyEntity == null) {
             throw ExceptionUtil.business(ErrorCodeConstants.USER_NOT_EXISTS);
         }
 
         String twoFactorAuthkey = googleAuth.createCredentials().getKey();
 
-        SysUser updateEntity = new SysUser();
+        SysUserEntity updateEntity = new SysUserEntity();
         updateEntity.setId(id).setTwoFactorAuthKey(twoFactorAuthkey);
 
-        userMapper.updateUser(updateEntity);
+        userMapper.updateById(updateEntity);
 
         return twoFactorAuthkey;
     }
 
-    public SysUser queryEntityById(@NonNull Long id) {
-        SysUser entity = userMapper.selectUserById(id);
+    public SysUserEntity queryEntityById(@NonNull Long id) {
+        SysUserEntity entity = userMapper.selectUserById(id);
         if (entity == null) {
             throw ExceptionUtil.business(ErrorCodeConstants.USER_NOT_EXISTS);
         }
@@ -140,7 +140,7 @@ public class UserService {
     @Transactional
     public void updatePwdByOldValue(
             @NonNull Long userId, @NonNull String oldPassword, @NonNull String newPassword) {
-        SysUser historyEntity = obtainUserById(userId);
+        SysUserEntity historyEntity = obtainUserById(userId);
         if (historyEntity == null) {
             throw ExceptionUtil.business(ErrorCodeConstants.USER_NOT_EXISTS);
         }
