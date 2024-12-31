@@ -20,10 +20,4 @@ spring:
 
 # 目前暂时没用到redis
 
----
-spring:
-  config:
-    activate:
-      on-profile: dev
-
 

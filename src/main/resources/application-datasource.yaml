@@ -14,15 +14,10 @@ spring:
   datasource:
     hikari:
       cds-mysql:
-        jdbc-url: jdbc:mysql://isuyh.com:3306/suyh_personal?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
-        username: suyh_personal
-        password: suyh_personal
+        jdbc-url: jdbc:mysql://isuyh.com:3306/study_vue?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+        username: study_vue
+        password: study_vue
         driver-class-name: com.mysql.cj.jdbc.Driver
-#      cds-pgsql:
-#        jdbc-url: jdbc:postgresql://192.168.8.43:5432/suyh_mock_tmp?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
-#        username: suyh_mock_tmp
-#        password: suyh_mock_tmp
-#        driver-class-name: org.postgresql.Driver
 
 
 
