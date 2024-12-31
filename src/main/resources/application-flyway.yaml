@@ -1,0 +1,23 @@
+
+spring:
+  flyway:
+    enabled: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: suyh,suyh_mac
+
+eb:
+  base:
+    flyway-cds-mysql:
+      enabled: true
+      locations:
+        - "sqls/mysql"
+    flyway-cds-pgsql:
+      enabled: false
+      locations:
+        - "sqls/pgsql"
+
+
