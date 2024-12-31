@@ -44,27 +44,15 @@ public class SysUserEntity implements Serializable {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String twoFactorAuthKey;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Date created;
-
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Date updated;
-
     /** 部门ID */
     private Long deptId;
-
-    /** 部门父ID */
-    private Long parentId;
-
-    /** 角色ID */
-    private Long roleId;
 
     /** 用户类型 */
     private String userType;
 
     /** 用户邮箱 */
     @Email(message = "邮箱格式不正确")
-    @Size(min = 0, max = 50, message = "邮箱长度不能超过50个字符")
+    @Size(max = 50, message = "邮箱长度不能超过50个字符")
     private String email;
 
     /** 手机号码 */
@@ -96,4 +84,10 @@ public class SysUserEntity implements Serializable {
     private String createBy;
 
     private String updateBy;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date created;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date updated;
 }
