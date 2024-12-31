@@ -21,11 +21,9 @@
 
         <flyway.version>7.15.0</flyway.version>
 
-        <poi.version>4.1.2</poi.version>
         <commons.io.version>2.13.0</commons.io.version>
 
         <googleauth.version>1.5.0</googleauth.version>
-        <pagehelper.boot.version>1.4.7</pagehelper.boot.version>
     </properties>
 
     <dependencies>
@@ -131,13 +129,6 @@
             <artifactId>annotations</artifactId>
             <version>13.0</version>
             <scope>provided</scope>
-        </dependency>
-
-        <!-- pagehelper 分页插件 -->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>${pagehelper.boot.version}</version>
         </dependency>
 
         <dependency>
